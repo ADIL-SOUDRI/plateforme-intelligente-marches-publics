@@ -8,4 +8,4 @@ class DocumentImporte(Document):
     __tablename__="documents_importes"
 
     date_importation =Column(DateTime , server_default=func.now())
-    utilisateur_id=Column(Integer ,ForeignKey("utilisateurs.id_utilisateur"))
+    id_utilisateur=Column(Integer ,ForeignKey("utilisateurs.id_utilisateur"))

@@ -11,3 +11,4 @@ from app.models.administrateur import Administrateur
 app = FastAPI()
 
 Base.metadata.create_all(bind=engine)
+

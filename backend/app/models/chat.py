@@ -8,5 +8,6 @@ class Chat(Base):
     date_creation=Column(DateTime,server_default=func.now())
     question=Column(String)
     reponse=Column(String)
-    utilisateur_id=Column(Integer ,ForeignKey("utilisateurs.id_utilisateur"))
-    admin_id=Column(Integer,ForeignKey("administrateurs.id_admin"))
+    id_utilisateur=Column(Integer ,ForeignKey("utilisateurs.id_utilisateur"))
+    id_admin=Column(Integer,ForeignKey("administrateurs.id_admin"))
+    id_document_importe=Column(Integer,ForeignKey("documents_importes.id"),nullable=True)
