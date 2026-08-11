@@ -1,6 +1,7 @@
 from sqlalchemy.orm import Session
 from app.models.document_reference import DocumentReference
 from app.repositories.document_reference_repository import DocumentReferenceRepository
+from app.exceptions.document_exceptions import DocumentReferenceNotFoundException
 
 class DocumentReferenceService:
 
@@ -14,10 +15,25 @@ class DocumentReferenceService:
         return self.repo.get_all(db)
     
     def supprimer_document_reference(self,db:Session,id:int):
-        return self.repo.delete(db,id)
+        document = self.repo.get_by_id(db, id)
+
+        if not document:
+            raise DocumentReferenceNotFoundException()
+
+        return self.repo.delete(db, id)
     
     def obtenir_document_reference(self,db:Session,id:int):
-        return self.repo.get_by_id(db,id)
+        document = self.repo.get_by_id(db, id)
+
+        if not document:
+            raise DocumentReferenceNotFoundException()
+
+        return document
     
     def modifier_document_reference(self,db:Session,id:int,doc:DocumentReference):
-        return self.repo.update(db,id,doc)
+        document = self.repo.get_by_id(db, id)
+
+        if not document:
+            raise DocumentReferenceNotFoundException()
+
+        return self.repo.update(db, id, doc)

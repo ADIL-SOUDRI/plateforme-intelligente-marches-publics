@@ -20,8 +20,8 @@ class DocumentImporteRepository:
         if document:
             db.delete(document)
             db.commit()
-            return "La suppression bien effectuée"
-        return "Document introuvable."
+            return document
+        
     def update(self,db:Session,id:int,new_document:DocumentImporte):
         doc=self.get_by_id(db,id)
         if doc:
@@ -30,4 +30,4 @@ class DocumentImporteRepository:
              db.commit()
              db.refresh(doc)
              return doc 
-        return " document n exite pas"
+        

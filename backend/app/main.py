@@ -12,7 +12,8 @@ from app.controllers.administrateur_controller import api as administrateur_api
 from app.controllers.document_importe_controller import api as document_importe_api
 from app.controllers.document_reference_controller import api as document_reference_api
 from app.controllers.chat_controller import api as chat_api
-
+from app.exceptions.base import AppException
+from app.handlers.exception_handler import app_exception_handler
 
 app = FastAPI()
 
@@ -22,3 +23,4 @@ app.include_router(administrateur_api)
 app.include_router(document_importe_api)
 app.include_router(document_reference_api)
 app.include_router(chat_api)
+app.add_exception_handler(AppException,app_exception_handler)

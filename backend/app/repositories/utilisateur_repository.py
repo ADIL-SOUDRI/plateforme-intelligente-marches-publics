@@ -20,8 +20,7 @@ class UtilisateurRepo:
         if user:
             db.delete(user)
             db.commit()
-            return "La suppression bien effectuée"
-        return "Utilisateur introuvable."
+            return user
     
     def update(self,db:Session,id:int,new_utilisateur=Utilisateur):
         user = self.get_by_id(db, id)
@@ -33,5 +32,4 @@ class UtilisateurRepo:
             db.commit()
             db.refresh(user)
             return user
-        else:
-            return"l'utilisateur n'existe pas"
+        

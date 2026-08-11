@@ -19,8 +19,8 @@ class ChatRepo:
             db.delete(chat)
             db.commit()
            # db.refresh()
-            return "La suppression bien effectuée"
-        return "chat introuvable"
+            return chat
+        
 
 
     def update(self,db:Session,id:int,new_chat:Chat):
@@ -31,7 +31,7 @@ class ChatRepo:
             db.commit()
             db.refresh(chat)
             return chat
-        return  " chat n'exite pas"
+        
     def get_by_user(self,db: Session,id_utilisateur: int):
         return db.query(Chat).filter(Chat.id_utilisateur == id_utilisateur).all()
     def get_by_admin(self,db: Session,id_admin: int):

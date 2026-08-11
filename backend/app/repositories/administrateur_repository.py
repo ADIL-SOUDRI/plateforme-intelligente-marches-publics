@@ -20,8 +20,8 @@ class AdministrateurRepo:
         if admin:
             db.delete(admin)
             db.commit()
-            return "La suppression bien effectuée"
-        return "Administrateur introuvable"
+            return admin
+        
     
     def update(self,db:Session,id:int,new_administrateur=Administrateur):
             user = self.get_by_id(db, id)
@@ -33,5 +33,4 @@ class AdministrateurRepo:
                 db.commit()
                 db.refresh(user)
                 return user
-            else:
-                return"l'administrateur n'existe pas"
+            

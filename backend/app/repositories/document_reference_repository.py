@@ -18,8 +18,7 @@ class DocumentReferenceRepository:
         if document:
             db.delete(document)
             db.commit()
-            return "La suppression bien effectuée"
-        return "Document introuvable."
+            return document
     def update(self, db: Session, id: int, new_document: DocumentReference):
         doc = self.get_by_id(db, id)
         if doc:
@@ -28,7 +27,7 @@ class DocumentReferenceRepository:
                 db.commit()
                 db.refresh(doc)
                 return doc 
-        return " document n exite pas"
+        
 
     def get_by_id(self, db: Session, id: int):
         return db.query(DocumentReference).filter(
