@@ -32,3 +32,7 @@ class ChatRepo:
             db.refresh(chat)
             return chat
         return  " chat n'exite pas"
+    def get_by_user(self,db: Session,id_utilisateur: int):
+        return db.query(Chat).filter(Chat.id_utilisateur == id_utilisateur).all()
+    def get_by_admin(self,db: Session,id_admin: int):
+        return db.query(Chat).filter(Chat.id_admin == id_admin).all()

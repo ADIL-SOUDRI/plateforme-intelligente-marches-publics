@@ -3,13 +3,13 @@ from app.models.administrateur import Administrateur
 
 class AdministrateurRepo:
 
-    def create(self , db:Session , admin:Administrateur):
-        db.add(admin)
+    def create(self , db:Session ,administrateur:Administrateur):
+        db.add(administrateur)
         db.commit()
-        db.refresh(admin)
-        return admin
+        db.refresh(administrateur)
+        return administrateur
 
-    def get_by_id(self , db:Session, id:int):
+    def get_by_id(self , db:Session,id:int):
          return db.query(Administrateur).filter(Administrateur.id_admin==id).first()
     
     def get_all(self,db:Session):

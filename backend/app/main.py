@@ -7,8 +7,18 @@ from app.models.document_importe import DocumentImporte
 from app.models.document_reference import DocumentReference
 from app.models.chat import Chat
 from app.models.administrateur import Administrateur
+from app.controllers.utilisateur_controller import api as utilisateur_api
+from app.controllers.administrateur_controller import api as administrateur_api
+from app.controllers.document_importe_controller import api as document_importe_api
+from app.controllers.document_reference_controller import api as document_reference_api
+from app.controllers.chat_controller import api as chat_api
+
 
 app = FastAPI()
 
 Base.metadata.create_all(bind=engine)
-
+app.include_router(utilisateur_api)
+app.include_router(administrateur_api)
+app.include_router(document_importe_api)
+app.include_router(document_reference_api)
+app.include_router(chat_api)

@@ -1,13 +1,13 @@
-import datetime
+from datetime import datetime
 from pydantic import BaseModel
-from backend.app.enums.type_document import TypeDocument
+from app.enums.type_document import TypeDocument
 
 class DocumentImporteCreate(BaseModel):
 
 
     titre: str
     type: TypeDocument
-    
+    id_utilisateur: int
 
 class DocumentImporteResponse(BaseModel):
     id: int
@@ -22,3 +22,4 @@ class DocumentImporteResponse(BaseModel):
 class DocumentImporteUpdate(BaseModel):
     titre: str
     type: TypeDocument
+    id_utilisateur: int

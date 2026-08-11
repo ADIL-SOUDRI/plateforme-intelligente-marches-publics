@@ -1,6 +1,6 @@
-import datetime
+from datetime import datetime
 from pydantic import BaseModel
-from backend.app.enums.type_document import TypeDocument
+from app.enums.type_document import TypeDocument
 
 class DocumentReferenceCreate(BaseModel):
 
@@ -14,7 +14,7 @@ class DocumentReferenceResponse(BaseModel):
     nom_fichier: str
     taille: float
     date_ajout: datetime
-    id_utilisateur:int
+    id_admin:int
     
     class Config:
         from_attributes = True
@@ -22,3 +22,4 @@ class DocumentReferenceResponse(BaseModel):
 class DocumentReferenceUpdate(BaseModel):
     titre: str
     type: TypeDocument
+    id_admin:int

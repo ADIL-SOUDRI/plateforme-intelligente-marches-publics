@@ -9,5 +9,5 @@ class Chat(Base):
     question=Column(String)
     reponse=Column(String)
     id_utilisateur=Column(Integer ,ForeignKey("utilisateurs.id_utilisateur"))
-    id_admin=Column(Integer,ForeignKey("administrateurs.id_admin"))
+    id_admin=Column(Integer,ForeignKey("administrateurs.id_admin"),nullable=True)
     id_document_importe=Column(Integer,ForeignKey("documents_importes.id"),nullable=True)

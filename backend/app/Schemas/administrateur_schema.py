@@ -7,7 +7,7 @@ class AdministrateurCreate(BaseModel):
     mot_de_passe:str
 
 class AdministrateurResponse(BaseModel):
-    id_administrateur:int
+    id_admin:int
     nom:str
     prenom:str
     email:str

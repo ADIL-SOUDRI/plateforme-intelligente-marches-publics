@@ -7,5 +7,5 @@ __pycache__/
 .idea/
 backend/test_db.py
 backend/qts_ameliorations.txt
-backend/tests/
+backend/tests/*.py
 backend/app/__init__.py

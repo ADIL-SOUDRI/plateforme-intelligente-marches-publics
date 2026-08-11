@@ -3,13 +3,13 @@ from app.models.utilisateur import Utilisateur
 
 class UtilisateurRepo:
 
-    def create(self , db:Session , user:Utilisateur):
+    def create(self , db:Session ,user:Utilisateur):
         db.add(user)
         db.commit()
         db.refresh(user)
         return user
 
-    def get_by_id(self , db:Session, id:int):
+    def get_by_id(self , db:Session,id:int):
          return db.query(Utilisateur).filter(Utilisateur.id_utilisateur==id).first()
     
     def get_all(self,db:Session):
