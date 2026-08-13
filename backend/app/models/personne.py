@@ -6,5 +6,5 @@ class Personne(Base):
 
     nom = Column(String )
     prenom = Column(String )
-    email = Column(String )
-    mot_de_passe = Column(String )
+    email = Column(String,unique=True,  nullable=False)
+    mot_de_passe = Column(String,nullable=False)

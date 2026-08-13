@@ -1,17 +1,18 @@
-from fastapi import APIRouter, UploadFile, File, Form
+from fastapi import APIRouter, Depends, UploadFile, File, Form
 
 from app.services.document_reference_service import DocumentReferenceService
 from app.core.database import SessionLocal
 from app.models.document_reference import DocumentReference
 from app.schemas.document_reference_schema import DocumentReferenceResponse,DocumentReferenceUpdate,DocumentReferenceCreate
 from app.enums.type_document import TypeDocument
+from app.core.dependencies import get_current_admin
 
 
 api = APIRouter()
 service = DocumentReferenceService()
 
 @api.get("/documents-references",response_model=list[DocumentReferenceResponse])
-def get_all():
+def get_all(current_admin=Depends(get_current_admin)):
     db = SessionLocal()
 
     try:
@@ -23,7 +24,7 @@ def get_all():
 
 
 @api.get("/documents-references/{id}",response_model=DocumentReferenceResponse)
-def get_by_id(id: int):
+def get_by_id(id: int,current_admin=Depends(get_current_admin)):
     db = SessionLocal()
 
     try:
@@ -34,7 +35,9 @@ def get_by_id(id: int):
 
 
 @api.post("/documents-references",response_model=DocumentReferenceResponse)
-def create(titre: str = Form(...),type: TypeDocument = Form(...),id_admin: int = Form(...),fichier: UploadFile = File(...)):
+def create(titre: str = Form(...),type: TypeDocument = Form(...),
+           id_admin: int = Form(...),fichier: UploadFile = File(...),
+           current_admin=Depends(get_current_admin)):
     db = SessionLocal()
 
     try:
@@ -56,7 +59,7 @@ def create(titre: str = Form(...),type: TypeDocument = Form(...),id_admin: int =
         db.close()
 
 @api.put("/documents-references/{id}",response_model=DocumentReferenceResponse)
-def update(id: int,doc: DocumentReferenceUpdate):
+def update(id: int,doc: DocumentReferenceUpdate,current_admin=Depends(get_current_admin)):
     db = SessionLocal()
 
     try:
@@ -71,7 +74,7 @@ def update(id: int,doc: DocumentReferenceUpdate):
 
 
 @api.delete( "/documents-references/{id}")
-def delete(id: int):
+def delete(id: int,current_admin=Depends(get_current_admin)):
     db = SessionLocal()
 
     try:

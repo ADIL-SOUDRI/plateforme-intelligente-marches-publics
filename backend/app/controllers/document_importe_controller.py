@@ -1,4 +1,4 @@
-from fastapi import APIRouter, UploadFile, File, Form
+from fastapi import APIRouter, Depends, UploadFile, File, Form
 
 from app.services.document_importe_service import DocumentImporteService
 from app.core.database import SessionLocal
@@ -7,13 +7,14 @@ from app.models.document_importe import DocumentImporte
 from app.schemas.document_importe_schema import DocumentImporteCreate,DocumentImporteResponse,DocumentImporteUpdate
 
 from app.enums.type_document import TypeDocument
+from app.core.dependencies import get_current_utilisateur
 
 
 api = APIRouter()
 service = DocumentImporteService()
 
 @api.get("/documents-importes",response_model=list[DocumentImporteResponse])
-def get_all():
+def get_all(current_utilisateur=Depends(get_current_utilisateur)):
     db = SessionLocal()
 
     try:
@@ -23,7 +24,7 @@ def get_all():
         db.close()
 
 @api.get("/documents-importes/{id}",response_model=DocumentImporteResponse)
-def get_by_id(id: int):
+def get_by_id(id: int,current_utilisateur=Depends(get_current_utilisateur)):
     db = SessionLocal()
 
     try:
@@ -33,7 +34,9 @@ def get_by_id(id: int):
         db.close()
 
 @api.post( "/documents-importes",response_model=DocumentImporteResponse)
-def create( id_utilisateur: int = Form(...), titre: str = Form(...), type: TypeDocument = Form(...),fichier: UploadFile = File(...)):
+def create( id_utilisateur: int = Form(...), titre: str = Form(...),
+            type: TypeDocument = Form(...),fichier: UploadFile = File(...),
+            current_utilisateur=Depends(get_current_utilisateur)):
     db = SessionLocal()
 
     try:
@@ -61,7 +64,7 @@ def create( id_utilisateur: int = Form(...), titre: str = Form(...), type: TypeD
 
 
 @api.put("/documents-importes/{id}",response_model=DocumentImporteResponse)
-def update(id: int,doc: DocumentImporteUpdate):
+def update(id: int,doc: DocumentImporteUpdate,current_utilisateur=Depends(get_current_utilisateur)):
     db = SessionLocal()
     try:
         document = DocumentImporte(
@@ -77,7 +80,7 @@ def update(id: int,doc: DocumentImporteUpdate):
 
 
 @api.delete("/documents-importes/{id}")
-def delete(id: int):
+def delete(id: int,current_utilisateur=Depends(get_current_utilisateur)):
     db = SessionLocal()
 
     try:

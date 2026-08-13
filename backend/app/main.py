@@ -14,7 +14,7 @@ from app.controllers.document_reference_controller import api as document_refere
 from app.controllers.chat_controller import api as chat_api
 from app.exceptions.base import AppException
 from app.handlers.exception_handler import app_exception_handler
-
+from app.controllers.auth_controller import api as auth_api
 app = FastAPI()
 
 Base.metadata.create_all(bind=engine)
@@ -24,3 +24,4 @@ app.include_router(document_importe_api)
 app.include_router(document_reference_api)
 app.include_router(chat_api)
 app.add_exception_handler(AppException,app_exception_handler)
+app.include_router(auth_api)

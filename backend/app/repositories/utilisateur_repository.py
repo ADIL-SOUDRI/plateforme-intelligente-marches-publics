@@ -32,4 +32,8 @@ class UtilisateurRepo:
             db.commit()
             db.refresh(user)
             return user
-        
+    def get_by_email(self,db: Session,email: str):
+
+        return db.query(Utilisateur).filter(
+        Utilisateur.email == email
+        ).first()
