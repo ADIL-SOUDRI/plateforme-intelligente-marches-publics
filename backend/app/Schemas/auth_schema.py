@@ -14,3 +14,9 @@ class TokenResponse(BaseModel):
     token_type: str
     class Config:
         from_attributes = True
+
+class RegisterRequest(BaseModel):
+    nom: str
+    prenom: str
+    email: EmailStr
+    mot_de_passe: str

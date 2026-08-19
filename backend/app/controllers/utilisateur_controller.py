@@ -16,7 +16,22 @@ def get_all( current_admin=Depends(get_current_admin)):
         return service.lister_utilisateurs(db)
     finally:
         db.close()
+@api.get("/users/me", response_model=UtilisateurResponse)
+def get_current_user_info(
+    current_user=Depends(get_current_utilisateur)
+):
+    db = SessionLocal()
 
+    try:
+        utilisateur = service.obtenir_utilisateur(
+            db,
+            int(current_user["sub"])
+        )
+
+        return utilisateur
+
+    finally:
+        db.close()
 @api.get("/users/{id}", response_model=UtilisateurResponse)
 def get_by_id(id:int,current_admin=Depends(get_current_admin)):
     try:
@@ -25,7 +40,7 @@ def get_by_id(id:int,current_admin=Depends(get_current_admin)):
         db.close()
 
 @api.post("/users",response_model=UtilisateurResponse)
-def create( user: UtilisateurCreate,current_utilisateur=Depends(get_current_utilisateur)):
+def create( user: UtilisateurCreate,current_admin=Depends(get_current_admin)):
     db = SessionLocal()
     try:
         utilisateur = Utilisateur(
@@ -55,7 +70,7 @@ def update(id: int, user: UtilisateurUpdate,current_admin=Depends(get_current_ad
 
 
 @api.delete("/users/{id}",response_model=UtilisateurResponse)
-def delete(id: int,rescurrent_admin=Depends(get_current_admin)):
+def delete(id: int,current_admin=Depends(get_current_admin)):
     try:
         return service.supprimer_utilisateur(db, id)
     finally:
@@ -71,12 +86,12 @@ def delete(id: int,rescurrent_admin=Depends(get_current_admin)):
 #         "role": current_user["role"]
 #     }
 
-@api.get("/test-utilisateur")
-def test_utilisateur(
-    current_user=Depends(get_current_user)
-):
-    return {
-        "message": "Accès autorisé",
-        "id": current_user["sub"],
-        "role": current_user["role"]
-    }
+# @api.get("/test-utilisateur")
+# def test_utilisateur(
+#     current_user=Depends(get_current_user)
+# ):
+#     return {
+#         "message": "Accès autorisé",
+#         "id": current_user["sub"],
+#         "role": current_user["role"]
+#     }

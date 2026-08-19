@@ -6,6 +6,7 @@ from app.models.administrateur import Administrateur
 from app.schemas.administrateur_schema import AdministrateurCreate,AdministrateurResponse,AdministrateurUpdate
 from app.core.security import hash_password
 from app.core.dependencies import get_current_admin
+from app.exceptions.auth_exceptions import AccessDeniedException
 
 api = APIRouter()
 service = AdministrateurService()
@@ -45,6 +46,8 @@ def create(admin: AdministrateurCreate,current_admin=Depends(get_current_admin))
 def update(id: int, admin: AdministrateurUpdate,current_admin=Depends(get_current_admin)):
     db = SessionLocal()
     try:
+        if id != int(current_admin["sub"]):
+            raise AccessDeniedException()
         administrateur = Administrateur(
             nom=admin.nom,
             prenom=admin.prenom,
@@ -60,6 +63,8 @@ db,id,administrateur)
 def delete(id: int,current_admin=Depends(get_current_admin)):
     db = SessionLocal()
     try:
+        if id != int(current_admin["sub"]):
+            raise AccessDeniedException()
         return service.supprimer_administrateur(db, id)
     finally:
         db.close()

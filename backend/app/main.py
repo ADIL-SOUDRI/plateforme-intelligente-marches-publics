@@ -25,3 +25,16 @@ app.include_router(document_reference_api)
 app.include_router(chat_api)
 app.add_exception_handler(AppException,app_exception_handler)
 app.include_router(auth_api)
+
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:3000",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)

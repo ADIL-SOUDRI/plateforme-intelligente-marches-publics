@@ -4,8 +4,8 @@ from pydantic import BaseModel
 
 class ChatCreate(BaseModel):
     question: str
-    id_admin: int | None = None
-    id_document_importe: int | None = None
+    # id_admin: int | None = None
+    # id_document_importe: int | None = None
 
 
 class ChatResponse(BaseModel):

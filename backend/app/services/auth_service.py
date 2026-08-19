@@ -4,11 +4,13 @@ from app.repositories.utilisateur_repository import UtilisateurRepo
 from app.repositories.administrateur_repository import AdministrateurRepo
 
 from app.core.security import (
+    hash_password,
     verify_password,
     create_access_token
 )
 
 from app.exceptions.auth_exceptions import InvalidCredentialsException
+from app.models.utilisateur import Utilisateur
 
 
 
@@ -19,18 +21,9 @@ class AuthService:
         self.utilisateur_repo = UtilisateurRepo()
         self.administrateur_repo = AdministrateurRepo()
 
-    def login(
-        self,
-        db: Session,
-        email: str,
-        mot_de_passe: str,
-        role: str
-    ):
+    def login(self,db: Session,email: str,mot_de_passe: str,role: str):
 
-        utilisateur = self.utilisateur_repo.get_by_email(
-            db,
-            email
-        )
+        utilisateur = self.utilisateur_repo.get_by_email(db,email)
         if role == "utilisateur":
 
             if utilisateur:
@@ -77,3 +70,22 @@ class AuthService:
 
         else:
             raise InvalidCredentialsException()
+        
+    def register(self,db: Session,nom: str,prenom: str,email: str,mot_de_passe: str):
+
+        utilisateur_existe = self.utilisateur_repo.get_by_email(db, email)
+
+        if utilisateur_existe:
+             raise InvalidCredentialsException()
+
+        utilisateur = Utilisateur(
+            nom=nom,
+            prenom=prenom,
+            email=email,
+            mot_de_passe=hash_password(mot_de_passe)
+        )
+
+        return self.utilisateur_repo.create(
+            db,
+            utilisateur
+        )

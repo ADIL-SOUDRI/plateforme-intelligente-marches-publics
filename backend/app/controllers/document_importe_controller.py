@@ -34,14 +34,14 @@ def get_by_id(id: int,current_utilisateur=Depends(get_current_utilisateur)):
         db.close()
 
 @api.post( "/documents-importes",response_model=DocumentImporteResponse)
-def create( id_utilisateur: int = Form(...), titre: str = Form(...),
+def create(  titre: str = Form(...),
             type: TypeDocument = Form(...),fichier: UploadFile = File(...),
             current_utilisateur=Depends(get_current_utilisateur)):
     db = SessionLocal()
 
     try:
         contenu = fichier.file.read()
-
+        id_utilisateur = int(current_utilisateur["sub"])
         
         doc_create = DocumentImporteCreate(
             titre=titre,
@@ -67,6 +67,7 @@ def create( id_utilisateur: int = Form(...), titre: str = Form(...),
 def update(id: int,doc: DocumentImporteUpdate,current_utilisateur=Depends(get_current_utilisateur)):
     db = SessionLocal()
     try:
+        id_utilisateur = int(current_utilisateur["sub"])
         document = DocumentImporte(
             titre=doc.titre,
             type=doc.type,
