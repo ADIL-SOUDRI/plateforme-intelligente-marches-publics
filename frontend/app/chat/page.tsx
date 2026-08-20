@@ -25,34 +25,85 @@ export default function ChatPage() {
 
   const [chatSelectionne, setChatSelectionne] =useState<MessageResponse | null>(null);
 
-  useEffect(() => {
+  // useEffect(() => {
 
-    async function chargerUtilisateur() {
-      try {
+  //   async function chargerUtilisateur() {
+  //     try {
+  //       const token = localStorage.getItem("access_token");
 
-        const utilisateur =await getCurrentUser();
-        setUser(utilisateur);
+      
+  //     if (!token) {
+  //       router.push("/login");
+  //       return;
+  //     }
 
-        const historiqueUtilisateur =await getHistoriqueUtilisateur(utilisateur.id_utilisateur);
 
-        setHistorique( historiqueUtilisateur);
+  //       const utilisateur =await getCurrentUser();
+  //       setUser(utilisateur);
+
+  //       const historiqueUtilisateur =await getHistoriqueUtilisateur(utilisateur.id_utilisateur);
+
+  //       setHistorique( historiqueUtilisateur);
 
 
-      } catch (error) {
-        console.error(error);
-        localStorage.removeItem("access_token");
-        router.push("/login");
+  //     } catch (error) {
+  //       console.error(error);
+  //       localStorage.removeItem("access_token");
+  //       router.push("/login");
 
-      } finally {
-        setLoading(false);
-      }
+  //     } finally {
+  //       setLoading(false);
+  //     }
+
+  //   }
+
+  //   chargerUtilisateur();
+
+  // }, [router]);
+useEffect(() => {
+
+  const token = localStorage.getItem("access_token");
+
+  // Pas de token → interdiction d'accès
+  if (!token) {
+    window.location.replace("/login");
+    return;
+  }
+
+  async function chargerUtilisateur() {
+
+    try {
+
+      const utilisateur = await getCurrentUser();
+
+      setUser(utilisateur);
+
+      const historiqueUtilisateur =
+        await getHistoriqueUtilisateur(
+          utilisateur.id_utilisateur
+        );
+
+      setHistorique(
+        historiqueUtilisateur
+      );
+    } catch (error) {
+
+      console.error(error);
+
+      localStorage.removeItem("access_token");
+
+      window.location.replace("/login");
+
+    } finally {
+
+      setLoading(false);
 
     }
+  }
 
-    chargerUtilisateur();
+  chargerUtilisateur();
 
-  }, [router]);
-
+}, []);
 
   async function handleSelectChat(
   chat: MessageResponse
@@ -70,20 +121,17 @@ export default function ChatPage() {
 
   }
 }
-  if (loading) {
+if (loading) {
+  return (
+    <main className="min-h-screen flex items-center justify-center">
+      <p>Vérification de connexion...</p>
+    </main>
+  );
+}
 
-    return (
-      <main className="min-h-screen flex items-center justify-center">
-
-        <p>
-          Chargement...
-        </p>
-
-      </main>
-    );
-
-  }
-
+if (!user) {
+  return null;
+}
 
   if (!user) {
     return null;

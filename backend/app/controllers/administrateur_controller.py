@@ -19,7 +19,24 @@ def get_all(current_admin=Depends(get_current_admin)):
     finally:
         db.close()
 
+@api.get("/admin/me")
+def get_current_admin_profile(
+    current_admin=Depends(get_current_admin)
+):
+    db = SessionLocal()
 
+    try:
+        id_admin = int(current_admin["sub"])
+
+        admin = service.obtenir_administrateur(
+            db,
+            id_admin
+        )
+
+        return admin
+
+    finally:
+        db.close()
 @api.get(
     "/administrateurs/{id}",response_model=AdministrateurResponse)
 def get_by_id(id: int,current_admin=Depends(get_current_admin)):

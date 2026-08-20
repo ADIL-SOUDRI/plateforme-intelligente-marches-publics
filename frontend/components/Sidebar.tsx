@@ -18,9 +18,13 @@ export default function Sidebar({
   const router = useRouter();
 
   function handleLogout() {
-    localStorage.removeItem("access_token");
-    router.push("/login");
-  }
+  localStorage.removeItem("access_token");
+
+  document.cookie =
+    "access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/";
+
+  router.replace("/login");
+}
 
   return (
     <aside className="w-64 min-h-[calc(100vh-4rem)] bg-gray-900 text-white p-4">
@@ -67,7 +71,7 @@ export default function Sidebar({
     {historique.length === 0 ? (
 
       <p className="px-4 py-2 text-sm text-gray-500">
-        Aucun historique
+        {/* Aucun historique */}
       </p>
 
     ) : (
@@ -107,13 +111,19 @@ export default function Sidebar({
 </div>
 
         <Link
-  href="/documents"
-  className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-800"
->
-  <span>📚</span>
-  <span>Documents</span>
-</Link>
-
+        href="/documents"
+        className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-800"
+      >
+        <span>📚</span>
+        <span>Documents</span>
+      </Link>
+      <button
+                onClick={handleLogout}
+          className="w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-red-800 text-left mt-6"
+        >
+          <span>🚪</span>
+          <span>Déconnexion</span>
+        </button>
       </nav>
 
     </aside>

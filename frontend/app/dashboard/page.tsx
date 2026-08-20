@@ -8,6 +8,8 @@ import Sidebar from "@/components/Sidebar";
 
 import { getCurrentUser } from "@/services/userService";
 import { Utilisateur } from "@/types/auth";
+import { getHistoriqueUtilisateur } from "@/services/chatService";
+import { MessageResponse } from "@/types/chat";
 
 export default function DashboardPage() {
 
@@ -15,7 +17,7 @@ export default function DashboardPage() {
 
   const [user, setUser] = useState<Utilisateur | null>(null);
   const [loading, setLoading] = useState(true);
-
+   const [historique, setHistorique] = useState<MessageResponse[]>([]);
   useEffect(() => {
 
     async function chargerUtilisateur() {
@@ -24,15 +26,22 @@ export default function DashboardPage() {
 
         const utilisateur = await getCurrentUser();
 
-        setUser(utilisateur);
+         setUser(utilisateur);
 
+         const historiqueUtilisateur =
+        await getHistoriqueUtilisateur(
+          utilisateur.id_utilisateur
+        );
+
+        setHistorique(historiqueUtilisateur);
       } catch (error) {
 
         console.error(error);
 
         localStorage.removeItem("access_token");
 
-        router.push("/login");
+        // router.push("/login");
+        window.location.replace("/login");
 
       } finally {
 

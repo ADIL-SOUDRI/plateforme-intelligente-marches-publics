@@ -21,3 +21,9 @@ export interface Utilisateur {
   prenom: string;
   email: string;
 }
+export interface Administrateur {
+  id_admin: number;
+  nom: string;
+  prenom: string;
+  email: string;
+}

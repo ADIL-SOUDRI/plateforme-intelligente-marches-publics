@@ -71,7 +71,9 @@ def update(id: int, user: UtilisateurUpdate,current_admin=Depends(get_current_ad
 
 @api.delete("/users/{id}",response_model=UtilisateurResponse)
 def delete(id: int,current_admin=Depends(get_current_admin)):
+    db=SessionLocal()
     try:
+        
         return service.supprimer_utilisateur(db, id)
     finally:
         db.close()
