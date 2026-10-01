@@ -55,32 +55,32 @@ def register(data: RegisterRequest):
     finally:
         db.close()
 
-@api.get("/test-auth")
-def test_auth(
-    current_user=Depends(get_current_user)
-):
-    return {
-        "message": "Token valide",
-        "user": current_user
-    }
+# @api.get("/test-auth")
+# def test_auth(
+#     current_user=Depends(get_current_user)
+# ):
+#     return {
+#         "message": "Token valide",
+#         "user": current_user
+#     }
 
-@api.get("/test-utilisateur")
+# @api.get("/test-utilisateur")
 
-def test_utilisateur(
-    current_user=Depends(get_current_utilisateur)
-):
-    return {
-        "message": "Accès utilisateur autorisé",
-        "id": current_user["sub"],
-        "role": current_user["role"]
-    }
+# def test_utilisateur(
+#     current_user=Depends(get_current_utilisateur)
+# ):
+#     return {
+#         "message": "Accès utilisateur autorisé",
+#         "id": current_user["sub"],
+#         "role": current_user["role"]
+#     }
 
-@api.get("/test-admin")
-def test_admin(
-    current_admin=Depends(get_current_admin)
-):
-    return {
-        "message": "Accès administrateur autorisé",
-        "id": current_admin["sub"],
-        "role": current_admin["role"]
-    }
+# @api.get("/test-admin")
+# def test_admin(
+#     current_admin=Depends(get_current_admin)
+# ):
+#     return {
+#         "message": "Accès administrateur autorisé",
+#         "id": current_admin["sub"],
+#         "role": current_admin["role"]
+#     }

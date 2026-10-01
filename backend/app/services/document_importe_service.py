@@ -39,6 +39,12 @@ class DocumentImporteService:
     def lister_documents_importes(self, db: Session):
         return self.repo.get_all(db)
 
+    def get_all_documents_importes_by_utilisateur(self, db: Session,id_utilisateur: int):
+            return self.repo.get_all_documents_importes_by_utilisateur(
+                db,
+                id_utilisateur
+            )
+
     def supprimer_document_importe(self, db: Session, id: int):
 
         document = self.repo.get_by_id(db, id)

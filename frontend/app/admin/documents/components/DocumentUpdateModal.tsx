@@ -141,6 +141,9 @@ export default function DocumentUpdateModal({
               <option value="GUIDE">
                 Guide
               </option>
+              <option value="AUTRE"> 
+                Autre 
+              </option>
             </select>
           </div>
 

@@ -158,6 +158,9 @@ export default function DocumentCreateModal({
               <option value="GUIDE"> 
                 Guide 
               </option> 
+              <option value="AUTRE"> 
+                Autre 
+              </option>
  
             </select> 
  

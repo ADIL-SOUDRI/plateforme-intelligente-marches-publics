@@ -23,48 +23,56 @@ export default function Navbar({
   }
 
   return (
-    <header className="h-16 bg-white border-b flex items-center justify-between px-6">
+    <header className="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-6 shadow-sm">
 
-      <div className="text-xl font-bold text-gray-800">
-        Marchés Publics
+      {/* Logo / Nom plateforme */}
+      <div className="text-xl font-bold text-slate-800">
+        Marchés <span className="text-blue-600">Publics</span>
       </div>
 
       <div className="relative">
 
+        {/* Bouton utilisateur */}
         <button
           type="button"
           onClick={() => setProfilOuvert(!profilOuvert)}
-          className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-100"
+          className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-slate-50 transition duration-200"
         >
-          <span className="text-xl">
-            👤
-          </span>
 
-          <span className="font-medium">
+          <div className="w-9 h-9 rounded-full bg-blue-100 flex items-center justify-center">
+            <span className="text-lg">
+              👤
+            </span>
+          </div>
+
+          <span className="font-medium text-slate-700">
             {nomUtilisateur}
           </span>
 
-          <span className="text-sm">
+          <span className="text-xs text-slate-400">
             ▼
           </span>
+
         </button>
 
+        {/* Menu profil */}
         {profilOuvert && (
-          <div className="absolute right-0 top-full mt-2 w-72 bg-white border border-gray-200 rounded-xl shadow-lg p-4 z-50">
+          <div className="absolute right-0 top-full mt-2 w-72 bg-white border border-slate-200 rounded-xl shadow-xl p-4 z-50">
 
+            {/* Informations utilisateur */}
             <div className="flex items-center gap-3">
 
               <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-xl">
                 👤
               </div>
 
-              <div>
+              <div className="min-w-0">
 
-                <p className="font-semibold text-gray-800">
+                <p className="font-semibold text-slate-800 truncate">
                   {nomUtilisateur}
                 </p>
 
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-slate-500 truncate">
                   {email}
                 </p>
 
@@ -72,27 +80,27 @@ export default function Navbar({
 
             </div>
 
-
-            <hr className="my-4" />
-
+            <hr className="my-4 border-slate-200" />
 
             {/* Profil */}
             <button
-        type="button"
-        onClick={() => router.push("/dashboard/profile")}
-        className="w-full text-left px-3 py-2 rounded-lg hover:bg-gray-100"
-        >
-        👤 Mon profil
-        </button>
+              type="button"
+              onClick={() => router.push("/dashboard/profile")}
+              className="w-full text-left px-3 py-2.5 rounded-lg text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition duration-200"
+            >
+              <span className="mr-2">👤</span>
+              Mon profil
+            </button>
 
+            {/* Déconnexion */}
             <button
               type="button"
               onClick={handleLogout}
-              className="w-full text-left px-3 py-2 rounded-lg hover:bg-gray-100 text-red-600"
+              className="w-full text-left px-3 py-2.5 rounded-lg text-red-600 hover:bg-red-50 hover:text-red-700 transition duration-200"
             >
-              <span>Déconnexion</span>
+              <span className="mr-2">↪</span>
+              Déconnexion
             </button>
-
 
           </div>
         )}

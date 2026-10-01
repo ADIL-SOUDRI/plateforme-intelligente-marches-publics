@@ -36,3 +36,9 @@ class ChatRepo:
         return db.query(Chat).filter(Chat.id_utilisateur == id_utilisateur).all()
     def get_by_admin(self,db: Session,id_admin: int):
         return db.query(Chat).filter(Chat.id_admin == id_admin).all()
+    def get_by_conversation(self, db: Session, id_conversation: int):
+        return (
+            db.query(Chat)
+            .filter(Chat.id_conversation == id_conversation)
+            .all()
+        )

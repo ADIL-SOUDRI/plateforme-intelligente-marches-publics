@@ -1,44 +1,141 @@
-import chromadb
+# import chromadb
 
 
-client = chromadb.PersistentClient(
-    path="chroma_db"
+# client = chromadb.PersistentClient(
+#     path="chroma_db"
+# )
+
+# collection = client.get_collection(
+#     name="documents_publics"
+# )
+
+# resultats = collection.get(
+#     limit=10
+# )
+
+# for i in range(
+#     len(resultats["ids"])
+# ):
+
+#     print("\n==============================")
+#     print("ID :", resultats["ids"][i])
+#     print(
+#         "Document :",
+#         resultats["metadatas"][i].get(
+#             "nom_fichier"
+#         )
+#     )
+#     print(
+#         "Article :",
+#         resultats["metadatas"][i].get(
+#             "article_numero"
+#         )
+#     )
+#     print(
+#         "Titre :",
+#         resultats["metadatas"][i].get(
+#             "article_titre"
+#         )
+#     )
+#     print(
+#         "Page :",
+#         resultats["metadatas"][i].get(
+#             "page"
+#         )
+#     )
+
+# from app.services.document.document_extraction_service import (
+#     DocumentExtractionService
+# )
+
+# service = DocumentExtractionService()
+
+# texte = service.extraire_texte(
+#     "uploads/documents_references/ccag_travaux.pdf"
+# )
+
+# print(texte[:5000])
+from app.services.document.document_extraction_service import (
+    DocumentExtractionService
 )
 
-collection = client.get_collection(
-    name="documents_publics"
+from app.services.document.document_cleaning_service import (
+    DocumentCleaningService
 )
 
-resultat = collection.get(
-    limit=5,
-    include=[
-        "documents",
-        "metadatas"
-    ]
+from app.services.document.document_structure_service import (
+    DocumentStructureService
 )
 
-print("\n========== TEST CHROMADB ==========\n")
+
+fichier = "uploads/documents_references/ccag_fournitures.pdf"
+
+
+# 1. Extraction
+extraction = DocumentExtractionService()
+
+texte = extraction.extraire_texte(
+    fichier
+)
+
+print("=" * 70)
+print("TEST EXTRACTION")
+print("=" * 70)
+
+print(texte[:3000])
+
+
+# 2. Nettoyage
+cleaning = DocumentCleaningService()
+
+texte_propre = cleaning.nettoyer(
+    texte
+)
+
+
+# 3. Structure
+structure = DocumentStructureService()
+
+texte_structure = structure.supprimer_sommaire(
+    texte_propre
+)
+
+articles = structure.trouver_articles(
+    texte_structure
+)
+
+
+print("\n")
+print("=" * 70)
+print("TEST STRUCTURATION")
+print("=" * 70)
 
 print(
-    "Nombre total :",
-    collection.count()
+    "Nombre articles :",
+    len(articles)
 )
 
-for i in range(len(resultat["ids"])):
 
-    print("\n--------------------------------")
+for article in articles[:20]:
+
+    print("\n------------------------------")
 
     print(
-        "ID :",
-        resultat["ids"][i]
+        "Article :",
+        article.get("numero")
     )
 
     print(
-        "Metadata :",
-        resultat["metadatas"][i]
+        "Titre :",
+        article.get("titre")
+    )
+
+    print(
+        "Page :",
+        article.get("page")
     )
 
     print(
         "Contenu :",
-        resultat["documents"][i][:200]
+        article.get("contenu", "")[:200]
     )

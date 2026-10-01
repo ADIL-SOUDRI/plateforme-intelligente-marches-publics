@@ -54,7 +54,7 @@ for i in range(len(documents)):
 
 resultats_filtres = service.filtrer_resultats(
     resultats,
-    distance_max=100.0
+    distance_max=12.0
 )
 
 

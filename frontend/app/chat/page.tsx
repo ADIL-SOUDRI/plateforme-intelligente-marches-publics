@@ -1,11 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-
-import { getHistoriqueUtilisateur,getChat} from "@/services/chatService";
 import { MessageResponse } from "@/types/chat";
-
 import Navbar from "@/components/Navbar";
 import Sidebar from "@/components/Sidebar";
 import ChatBox from "@/components/ChatBox";
@@ -13,129 +9,79 @@ import ChatBox from "@/components/ChatBox";
 import { getCurrentUser } from "@/services/userService";
 import { Utilisateur } from "@/types/auth";
 
-
 export default function ChatPage() {
 
-  const router = useRouter();
   const [user, setUser] =
     useState<Utilisateur | null>(null);
-  const [loading, setLoading] =useState(true);
 
-  const [historique, setHistorique] = useState<MessageResponse[]>([]);
+  const [loading, setLoading] =
+    useState(true);
+  const [chatSelectionne, setChatSelectionne] =
+  useState<MessageResponse | null>(null);
 
-  const [chatSelectionne, setChatSelectionne] =useState<MessageResponse | null>(null);
+  useEffect(() => {
 
-  // useEffect(() => {
+    const token =
+      localStorage.getItem("access_token");
 
-  //   async function chargerUtilisateur() {
-  //     try {
-  //       const token = localStorage.getItem("access_token");
+    // Pas de token → retour login
+    if (!token) {
+      window.location.replace("/login");
+      return;
+    }
 
-      
-  //     if (!token) {
-  //       router.push("/login");
-  //       return;
-  //     }
+    async function chargerUtilisateur() {
 
+      try {
 
-  //       const utilisateur =await getCurrentUser();
-  //       setUser(utilisateur);
+        const utilisateur =
+          await getCurrentUser();
 
-  //       const historiqueUtilisateur =await getHistoriqueUtilisateur(utilisateur.id_utilisateur);
+        setUser(utilisateur);
 
-  //       setHistorique( historiqueUtilisateur);
+      } catch (error) {
 
-
-  //     } catch (error) {
-  //       console.error(error);
-  //       localStorage.removeItem("access_token");
-  //       router.push("/login");
-
-  //     } finally {
-  //       setLoading(false);
-  //     }
-
-  //   }
-
-  //   chargerUtilisateur();
-
-  // }, [router]);
-useEffect(() => {
-
-  const token = localStorage.getItem("access_token");
-
-  // Pas de token → interdiction d'accès
-  if (!token) {
-    window.location.replace("/login");
-    return;
-  }
-
-  async function chargerUtilisateur() {
-
-    try {
-
-      const utilisateur = await getCurrentUser();
-
-      setUser(utilisateur);
-
-      const historiqueUtilisateur =
-        await getHistoriqueUtilisateur(
-          utilisateur.id_utilisateur
+        console.error(
+          "Erreur lors du chargement de l'utilisateur :",
+          error
         );
 
-      setHistorique(
-        historiqueUtilisateur
-      );
-    } catch (error) {
+        localStorage.removeItem("access_token");
 
-      console.error(error);
+        window.location.replace("/login");
 
-      localStorage.removeItem("access_token");
+      } finally {
 
-      window.location.replace("/login");
+        setLoading(false);
 
-    } finally {
-
-      setLoading(false);
-
+      }
     }
-  }
 
-  chargerUtilisateur();
+    chargerUtilisateur();
 
-}, []);
+  }, []);
 
-  async function handleSelectChat(
-  chat: MessageResponse
-) {
 
-  try {
+  if (loading) {
 
-    const chatComplet = await getChat(chat.id);
+    return (
+      <main className="min-h-screen flex items-center justify-center">
 
-    setChatSelectionne(chatComplet);
+        <p>
+          Vérification de connexion...
+        </p>
 
-  } catch (error) {
-
-    console.error( "Erreur lors du chargement du chat :",error);
+      </main>
+    );
 
   }
-}
-if (loading) {
-  return (
-    <main className="min-h-screen flex items-center justify-center">
-      <p>Vérification de connexion...</p>
-    </main>
-  );
-}
 
-if (!user) {
-  return null;
-}
 
   if (!user) {
     return null;
   }
+
+
   return (
 
     <div className="min-h-screen bg-gray-100">
@@ -150,34 +96,38 @@ if (!user) {
 
       <div className="flex">
 
-        <Sidebar
-          historique={historique}
-          onSelectChat={handleSelectChat}
-        />
+        {/* Sidebar sans historique */}
+
+        <Sidebar />
+
+
+        {/* Contenu principal */}
+
         <main className="flex-1 p-6">
 
           <div className="mb-4">
 
             <h1 className="text-2xl font-bold text-gray-800">
-
-              Assistant marchés publics
-
+              Bienvenue  {user.prenom}
             </h1>
 
             <p className="text-gray-500">
-
               Posez vos questions concernant les marchés publics.
-
             </p>
 
           </div>
 
 
+          {/* Chatbot */}
+
           <ChatBox
             chatSelectionne={chatSelectionne}
             />
-             </main>
-             </div>
+
+        </main>
+
+      </div>
+
     </div>
 
   );

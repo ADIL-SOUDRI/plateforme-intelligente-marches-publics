@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-gray-100 flex flex-col items-center justify-center px-6">
 
-      {/* Titre */}
+     
       <div className="text-center mb-10">
 
         <h1 className="text-4xl font-bold text-gray-800">

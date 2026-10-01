@@ -13,9 +13,10 @@ class ChatResponse(BaseModel):
     question: str
     reponse: str
     date_creation: datetime
-    id_utilisateur: int
+    id_utilisateur: int | None
     id_admin: int | None
     id_document_importe: int | None
+    id_conversation:int | None
 
     class Config:
         from_attributes = True

@@ -9,9 +9,7 @@ export default function AdminSidebar() {
 
   function handleLogout() {
 
-    localStorage.removeItem(
-      "access_token"
-    );
+    localStorage.removeItem("access_token");
 
     document.cookie =
       "access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/";
@@ -25,6 +23,7 @@ export default function AdminSidebar() {
 
       <nav className="space-y-2">
 
+
         <Link
           href="/admin/dashboard"
           className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-800"
@@ -33,13 +32,12 @@ export default function AdminSidebar() {
           <span>Dashboard</span>
         </Link>
 
-
         <Link
-        href="/admin/utilisateurs"
-        className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-800"
+          href="/admin/utilisateurs"
+          className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-800"
         >
-        <span>👥</span>
-        <span>Utilisateurs</span>
+          <span>👥</span>
+          <span>Utilisateurs</span>
         </Link>
 
 
@@ -50,6 +48,26 @@ export default function AdminSidebar() {
           <span>📚</span>
           <span>Documents</span>
         </Link>
+
+
+        <Link
+          href="/admin/assistant"
+          className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-800"
+        >
+          <span>💬</span>
+          <span>Assistant</span>
+        </Link>
+
+
+
+        <Link
+          href="/admin/assistant/historique"
+          className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-800"
+        >
+          <span>🕘</span>
+          <span>Historique</span>
+        </Link>
+
 
 
         <button

@@ -52,13 +52,13 @@ export default function Sidebar({
           className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-800"
         >
           <span>📚</span>
-          <span>Documents</span>
+          <span> Documents Importés</span>
         </Link>
-
+        
 <div className="pt-2">
 
   <Link
-    href="/chat"
+    href="/chat/historique"
     className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-800"
   >
     <span>🕘</span>
@@ -110,13 +110,13 @@ export default function Sidebar({
 
 </div>
 
-        <Link
+        {/* <Link
         href="/documents"
         className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-800"
       >
         <span>📚</span>
         <span>Documents</span>
-      </Link>
+      </Link> */}
       <button
                 onClick={handleLogout}
           className="w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-red-800 text-left mt-6"

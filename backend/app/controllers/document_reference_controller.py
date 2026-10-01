@@ -7,10 +7,12 @@ from app.models.document_reference import DocumentReference
 from app.schemas.document_reference_schema import DocumentReferenceResponse,DocumentReferenceUpdate,DocumentReferenceCreate
 from app.enums.type_document import TypeDocument
 from app.core.dependencies import get_current_user ,get_current_admin
-
-
+from app.services.document.document_indexation_service import (
+    DocumentIndexationService
+)
 api = APIRouter()
 service = DocumentReferenceService()
+indexation_service = DocumentIndexationService()
 UPLOAD_DIR = Path("uploads/documents_references")
 UPLOAD_DIR.mkdir(parents=True,exist_ok=True)
 @api.get("/documents-references",response_model=list[DocumentReferenceResponse])
@@ -59,8 +61,16 @@ def create(titre: str = Form(...),type: TypeDocument = Form(...),
             chemin_fichier=str(chemin),
             id_admin=int(current_admin["sub"])
             )
-
-        return service.creer_document_reference(db, document)
+        document=service.creer_document_reference(db, document)
+        resultat_indexation = (
+    indexation_service.indexer_document(
+        chemin_fichier=document.chemin_fichier,
+        document_id=document.id,
+        type_source="reference",
+        nom_fichier=document.nom_fichier
+    )
+)
+        return document
 
     finally:
         db.close()

@@ -127,45 +127,45 @@ def poser_question(request:ChatCreate,current_user=Depends(get_current_user)):
         id_utilisateur=int(current_user["sub"])
     )
     return chat
-@api.post("/chatss")
-def poser_question(
-    request: ChatCreate,
-    current_user=Depends(get_current_user)
-):
-    resultat = rag_service.repondre(
-        question=request.question
-    )
+# @api.post("/chatss")
+# def poser_question(
+#     request: ChatCreate,
+#     current_user=Depends(get_current_user)
+# ):
+#     resultat = rag_service.repondre(
+#         question=request.question
+#     )
 
-    return {
-        "question": resultat["question"],
-        "reponse": resultat["reponse"],
-        "sources": resultat["sources"]
-    }
-@api.post("/chatsss", response_model=ChatResponse)
-def poser_question(
-    request: ChatCreate,
-    current_user=Depends(get_current_user)
-):
-    db=SessionLocal()
-    id_utilisateur = int(current_user["sub"])
+#     return {
+#         "question": resultat["question"],
+#         "reponse": resultat["reponse"],
+#         "sources": resultat["sources"]
+#     }
+# @api.post("/chatsss", response_model=ChatResponse)
+# def poser_question(
+#     request: ChatCreate,
+#     current_user=Depends(get_current_user)
+# ):
+#     db=SessionLocal()
+#     id_utilisateur = int(current_user["sub"])
 
-    resultat = {
-    "question": request.question,
-    "reponse": "Réponse de test du système RAG.",
-    "sources": []
-}
+#     resultat = {
+#     "question": request.question,
+#     "reponse": "Réponse de test du système RAG.",
+#     "sources": []
+# }
 
-    chat = Chat(
-        question=resultat["question"],
-        reponse=resultat["reponse"],
-        id_utilisateur=id_utilisateur
-    )
+#     chat = Chat(
+#         question=resultat["question"],
+#         reponse=resultat["reponse"],
+#         id_utilisateur=id_utilisateur
+#     )
 
-    db.add(chat)
-    db.commit()
-    db.refresh(chat)
+#     db.add(chat)
+#     db.commit()
+#     db.refresh(chat)
 
-    return chat
+#     return chat
 
 # @api.post("/chats", response_model=ChatResponse)
 # def poser_question(
@@ -196,26 +196,26 @@ def poser_question(
 
 #     return chat
 
-@api.post("/chats-s",response_model=ChatResponse)
-def poser_question(question:str,current_user=Depends(get_current_user)):
-    db = SessionLocal()
-    resultat = rag_service.repondre(
-        question=question,
-        # document_id=request.document_id
-    )
-    id_utilisateur = int(current_user["sub"])
-    chat_create=ChatCreate(
-        question=question
-    )
-    chat=Chat(
-        question=chat_create.question,
-        reponse=resultat["reponse"],
-        id_utilisateur=id_utilisateur
-    )
-    chat1 = service.creer_chat(
-        db,chat
-    )
-    return chat1
+# @api.post("/chats-s",response_model=ChatResponse)
+# def poser_question(question:str,current_user=Depends(get_current_user)):
+#     db = SessionLocal()
+#     resultat = rag_service.repondre(
+#         question=question,
+#         # document_id=request.document_id
+#     )
+#     id_utilisateur = int(current_user["sub"])
+#     chat_create=ChatCreate(
+#         question=question
+#     )
+#     chat=Chat(
+#         question=chat_create.question,
+#         reponse=resultat["reponse"],
+#         id_utilisateur=id_utilisateur
+#     )
+#     chat1 = service.creer_chat(
+#         db,chat
+#     )
+#     return chat1
 @api.post("/chats-ss", response_model=ChatResponse)
 def poser_question(
     request: ChatCreate,
@@ -226,14 +226,22 @@ def poser_question(
     resultat = rag_service.repondre(
         question=request.question
     )
+    id_connecte = int(current_user["sub"])
+    role = current_user["role"]
 
-    id_utilisateur = int(current_user["sub"])
-
-    chat = Chat(
+    # id_utilisateur = int(current_user["sub"])
+    if role == "administrateur":
+        chat = Chat(
+                question=request.question,
+                reponse=resultat["reponse"],
+                id_admin=id_connecte
+            )
+    elif role == "utilisateur":
+        chat = Chat(
         question=request.question,
         reponse=resultat["reponse"],
-        id_utilisateur=id_utilisateur
-    )
+            id_utilisateur=id_connecte
+        )
 
     chat = service.creer_chat(
         db=db,
@@ -241,3 +249,4 @@ def poser_question(
     )
 
     return chat
+

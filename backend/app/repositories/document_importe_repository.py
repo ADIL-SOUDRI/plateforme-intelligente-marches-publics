@@ -13,7 +13,18 @@ class DocumentImporteRepository:
         return db.query(DocumentImporte).all()
     def get_by_id(self,db:Session,id:int):
         return db.query(DocumentImporte).filter(DocumentImporte.id==id).first()
-
+    def get_all_documents_importes_by_utilisateur(
+            self,
+            db: Session,
+            id_utilisateur: int
+        ):
+            return (
+                db.query(DocumentImporte)
+                .filter(
+                    DocumentImporte.id_utilisateur == id_utilisateur
+                )
+                .all()
+            )
     def delete(self,db: Session,id:int):
         document = db.query(DocumentImporte).filter( DocumentImporte.id == id).first()
 

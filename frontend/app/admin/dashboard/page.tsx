@@ -63,10 +63,6 @@ export default function AdminDashboardPage() {
   }, [router]);
 
 
-  // ======================================================
-  // CHARGEMENT
-  // ======================================================
-
   if (loading) {
 
     return (
@@ -91,17 +87,10 @@ export default function AdminDashboardPage() {
   }
 
 
-  // ======================================================
-  // INTERFACE
-  // ======================================================
-
   return (
 
     <div className="min-h-screen bg-gray-50">
 
-      {/* ==================================================
-          NAVBAR
-      ================================================== */}
 
       <AdminNavbar
         nomAdmin={`${admin.prenom} ${admin.nom}`}
@@ -111,26 +100,19 @@ export default function AdminDashboardPage() {
 
       <div className="flex">
 
-        {/* ==================================================
-            SIDEBAR
-        ================================================== */}
+
 
         <AdminSidebar />
 
 
-        {/* ==================================================
-            CONTENU PRINCIPAL
-        ================================================== */}
-
         <main className="flex-1 p-8">
 
-          {/* Titre */}
 
           <div className="mb-8">
 
             <h1 className="text-3xl font-bold text-gray-800">
 
-              Bienvenue {admin.prenom} 👋
+              Bienvenue {admin.prenom} 
 
             </h1>
 
@@ -141,18 +123,32 @@ export default function AdminDashboardPage() {
             </p>
 
           </div>
+          <div className="
+  bg-white
+  rounded-2xl
+  shadow-sm
+  border
+  border-gray-200
+  p-6
+">
+
+  <h2 className="text-xl font-bold text-gray-800 mb-2">
+    Espace administrateur
+  </h2>
+
+  <p className="text-gray-500 leading-relaxed">
+    Depuis ce tableau de bord, vous pouvez gérer les utilisateurs,
+    les documents et les différentes ressources de la plateforme
+    d'assistance aux marchés publics.
+  </p>
+
+</div>
 
 
-          {/* ==================================================
-              STATISTIQUES
-          ================================================== */}
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10">
 
 
-            {/* ==================================================
-                UTILISATEURS
-            ================================================== */}
 
             <Link
               href="/admin/utilisateurs"
@@ -203,9 +199,7 @@ export default function AdminDashboardPage() {
             </Link>
 
 
-            {/* ==================================================
-                DOCUMENTS
-            ================================================== */}
+
 
             <Link
               href="/admin/documents"
@@ -256,9 +250,6 @@ export default function AdminDashboardPage() {
             </Link>
 
 
-            {/* ==================================================
-                QUESTIONS
-            ================================================== */}
 
             <div className="
               bg-white
@@ -303,36 +294,8 @@ export default function AdminDashboardPage() {
           </div>
 
 
-          {/* ==================================================
-              INFORMATIONS
-          ================================================== */}
 
-          <div className="
-            mt-8
-            bg-white
-            rounded-xl
-            shadow-sm
-            border
-            border-gray-200
-            p-6
-          ">
-
-            <h2 className="text-xl font-bold text-gray-800 mb-2">
-
-              Espace administrateur
-
-            </h2>
-
-            <p className="text-gray-500">
-
-              Depuis ce tableau de bord, vous pouvez
-              gérer les utilisateurs, les documents
-              et les différentes ressources de la
-              plateforme d'assistance aux marchés publics.
-
-            </p>
-
-          </div>
+          
 
         </main>
 

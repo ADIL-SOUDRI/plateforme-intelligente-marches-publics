@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import Optional
 from pydantic import BaseModel
 from app.enums.type_document import TypeDocument
 
@@ -13,6 +14,7 @@ class DocumentImporteResponse(BaseModel):
     id: int
     nom_fichier: str
     taille: float
+    chemin_fichier: Optional[str] = None
     date_importation: datetime
     id_utilisateur:int
     

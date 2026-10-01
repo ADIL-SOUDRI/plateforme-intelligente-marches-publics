@@ -1,4 +1,4 @@
-from sqlalchemy import Column,DateTime, func,Integer,ForeignKey
+from sqlalchemy import Column,DateTime, String, func,Integer,ForeignKey
 from datetime import datetime
 
 from app.models.document import Document
@@ -9,3 +9,7 @@ class DocumentImporte(Document):
 
     date_importation =Column(DateTime , server_default=func.now())
     id_utilisateur=Column(Integer ,ForeignKey("utilisateurs.id_utilisateur"))
+    chemin_fichier = Column(
+    String,
+    nullable=False
+)

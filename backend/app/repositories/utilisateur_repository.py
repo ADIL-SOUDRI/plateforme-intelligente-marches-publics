@@ -13,7 +13,7 @@ class UtilisateurRepo:
          return db.query(Utilisateur).filter(Utilisateur.id_utilisateur==id).first()
     
     def get_all(self,db:Session):
-        return db.query(Utilisateur).all()
+        return db.query(Utilisateur).order_by(Utilisateur.id_utilisateur.asc()).all()
     
     def delete(self, db:Session,id:int):
         user = self.get_by_id(db, id)

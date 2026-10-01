@@ -28,15 +28,9 @@ generation_service = GenerationService()
 
 questions = [
 
-    # Question CCAG
-    " le cahier de chantier ",
-
-    # # Question décret
-    # "Quels sont les principes généraux de la passation des marchés publics ?",
-
-    # # Question qui devrait être absente
-    # "Quelle est la procédure pour obtenir un permis de construire ?",
-    # "aaaaaaa bbbbb"
+   
+    " Quelles sont les rues concernées par les travaux de voirie dans la ville d'Assilah ?"
+    
 ]
 
 
@@ -61,7 +55,8 @@ for question in questions:
 
     resultats = vector_search_service.rechercher(
         question=question,
-        top_k=20
+        top_k=10,
+        document_id=23
     )
 
     print(
@@ -77,7 +72,7 @@ for question in questions:
     resultats_filtres = (
         vector_search_service.filtrer_resultats(
             resultats,
-            distance_max=100.0
+            # distance_max=120.0
         )
     )
 

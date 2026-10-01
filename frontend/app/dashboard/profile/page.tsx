@@ -32,8 +32,8 @@ export default function ProfilePage() {
 
   if (loading) {
     return (
-      <main className="min-h-screen flex items-center justify-center">
-        <p>Chargement du profil...</p>
+      <main className="min-h-screen flex items-center justify-center bg-slate-100">
+        <p className="text-slate-600">Chargement du profil...</p>
       </main>
     );
   }
@@ -43,18 +43,25 @@ export default function ProfilePage() {
   }
 
   return (
-    <main className="min-h-screen bg-gray-100 p-8">
+    <main className="min-h-screen bg-slate-100 p-8">
 
       <div className="max-w-2xl mx-auto">
 
-        <button
+        {/* <button
           onClick={() => router.push("/dashboard")}
-          className="mb-6 text-blue-600 hover:underline"
+          className="mb-6 text-blue-600 hover:text-blue-700 hover:underline font-medium"
         >
           ← Retour au Dashboard
-        </button>
+        </button> */}
+        <button
+        onClick={() => router.push("/dashboard")}
+        className="mb-6 inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 text-white font-medium shadow-sm hover:bg-blue-700 hover:shadow-md transition duration-200"
+      >
+        <span className="text-lg">←</span>
+        Retour au Dashboard
+      </button>
 
-        <div className="bg-white rounded-xl shadow-sm p-8">
+        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-8">
 
           <div className="flex items-center gap-4 mb-8">
 
@@ -63,11 +70,11 @@ export default function ProfilePage() {
             </div>
 
             <div>
-              <h1 className="text-2xl font-bold text-gray-800">
+              <h1 className="text-2xl font-bold text-slate-800">
                 Mon profil
               </h1>
 
-              <p className="text-gray-500">
+              <p className="text-slate-500">
                 Informations de votre compte
               </p>
             </div>
@@ -77,31 +84,31 @@ export default function ProfilePage() {
           <div className="space-y-5">
 
             <div>
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-slate-500">
                 Prénom
               </p>
 
-              <p className="text-lg font-medium">
+              <p className="text-lg font-medium text-slate-800">
                 {user.prenom}
               </p>
             </div>
 
             <div>
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-slate-500">
                 Nom
               </p>
 
-              <p className="text-lg font-medium">
+              <p className="text-lg font-medium text-slate-800">
                 {user.nom}
               </p>
             </div>
 
             <div>
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-slate-500">
                 Email
               </p>
 
-              <p className="text-lg font-medium">
+              <p className="text-lg font-medium text-slate-800">
                 {user.email}
               </p>
             </div>

@@ -30,14 +30,46 @@ class DocumentExtractionService:
 
         textes = []
 
-        for page in reader.pages:
+        # for page in reader.pages:
+
+        #     texte = page.extract_text()
+
+        #     if texte:
+        #         textes.append(texte)
+
+        # return "\n".join(textes)
+        for numero_page, page in enumerate(
+            reader.pages,
+            start=1
+        ):
 
             texte = page.extract_text()
 
             if texte:
-                textes.append(texte)
 
+                textes.append(
+                    f"\n[PAGE:{numero_page}]\n"
+                    f"{texte}"
+                )
         return "\n".join(textes)
+        # pages = []
+
+        # for numero_page, page in enumerate(
+        #     reader.pages,
+        #     start=1
+        # ):
+
+        #     texte = page.extract_text()
+
+        #     if texte and texte.strip():
+
+
+        #         pages.append({
+        #             "page": numero_page,
+        #             "texte": texte.strip()
+        #         })
+
+        # return pages
 
     def _extraire_docx(self, chemin: Path) -> str:
 

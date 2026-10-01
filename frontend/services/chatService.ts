@@ -9,7 +9,7 @@ export async function poserQuestion(
   const token = localStorage.getItem("access_token");
 
   if (!token) {
-    throw new Error("Utilisateur non connecté");
+    throw new Error("Utilisateur non authentifie");
   }
 
   const response = await fetch(`${API_URL}/chats-ss`, {
@@ -100,6 +100,39 @@ export async function getChat(
       typeof result.detail === "string"
         ? result.detail
         : "Erreur lors de la récupération du chat"
+    );
+  }
+
+  return result;
+}
+export async function getHistoriqueAdmin(
+  idAdmin: number
+): Promise<MessageResponse[]> {
+
+  const token = localStorage.getItem("access_token");
+
+  if (!token) {
+    throw new Error("Administrateur non authentifié");
+  }
+
+  const response = await fetch(
+    `${API_URL}/chats/admin/${idAdmin}`,
+    {
+      method: "GET",
+
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  const result = await response.json();
+
+  if (!response.ok) {
+    throw new Error(
+      typeof result.detail === "string"
+        ? result.detail
+        : "Erreur lors de la récupération de l'historique"
     );
   }
 

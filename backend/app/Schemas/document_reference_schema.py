@@ -17,6 +17,9 @@ class DocumentReferenceResponse(BaseModel):
     chemin_fichier: Optional[str] = None
     date_ajout: datetime
     id_admin:int
+    titre:str
+    type: TypeDocument
+
     
     class Config:
         from_attributes = True

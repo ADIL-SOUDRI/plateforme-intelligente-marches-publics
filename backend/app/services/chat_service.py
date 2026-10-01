@@ -43,3 +43,12 @@ class CHatService:
     
     def consulter_historique_admin(self, db:Session,id_admin: int):
         return self.repo.get_by_admin(db, id_admin)
+    # def consulter_chats_conversation(
+    #     self,
+    #     db: Session,
+    #     id_conversation: int
+    # ):
+    #     return self.repo.get_by_conversation(
+    #         db,
+    #         id_conversation
+    #     )
