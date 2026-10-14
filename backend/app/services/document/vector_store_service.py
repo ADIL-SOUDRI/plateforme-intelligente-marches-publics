@@ -75,8 +75,12 @@ class VectorStoreService:
 
     def __init__(self):
 
-        self.client = chromadb.PersistentClient(
-            path="chroma_db"
+        # self.client = chromadb.PersistentClient(
+        #     path="chroma_db"
+        # )
+        self.client = chromadb.HttpClient(
+            host="localhost",
+            port=8002
         )
 
         self.collection = (

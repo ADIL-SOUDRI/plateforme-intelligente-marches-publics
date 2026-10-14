@@ -24,7 +24,7 @@ frontend/.yarn/*
 !frontend/.yarn/plugins
 !frontend/.yarn/releases
 !frontend/.yarn/versions
-
+*.dump
 frontend/.next/
 frontend/out/
 frontend/build/

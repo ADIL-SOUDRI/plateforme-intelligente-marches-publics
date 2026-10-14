@@ -12,9 +12,11 @@ class GenerationService:
             api_key=settings.GEMINI_API_KEY
         )
 
-        # self.model = "gemini-2.5-flash"
+        self.model = "gemini-2.5-flash"
         # self.model = "gemini-2.0-flash"
-        self.model = "gemini-3.5-flash-lite"
+        # self.model = "gemini-3.5-flash-lite"
+        # self.model = "gemini-3.5-flash"
+
 
         
         # from groq import Groq

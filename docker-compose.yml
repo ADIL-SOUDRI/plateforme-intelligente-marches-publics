@@ -1,0 +1,66 @@
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: pfa_postgres
+    environment:
+      POSTGRES_DB: marches_publics
+      POSTGRES_USER: adil
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "5434:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+  chromadb:
+    image: chromadb/chroma:latest
+    container_name: pfa_chromadb
+    ports:
+      - "8002:8000"
+    volumes:
+      - chroma_data:/data
+
+volumes:
+  postgres_data:
+  chroma_data:
+
+# services:
+#   postgres:
+#     image: postgres:16
+#     container_name: pfa2_postgres
+#     restart: "no"
+#     environment:
+#       POSTGRES_DB: marches_publics
+#       POSTGRES_USER: adil
+#       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+#     ports:
+#       - "5433:5432"
+#     volumes:
+#       - postgres_data:/var/lib/postgresql/data
+
+#   chroma:
+#     image: chromadb/chroma
+#     container_name: pfa2_chroma
+#     restart: "no"
+#     environment:
+#       IS_PERSISTENT: "TRUE"
+#       PERSIST_DIRECTORY: /chroma/chroma
+#     ports:
+#       - "8001:8000"
+#     volumes:
+#       - chroma_data:/chroma/chroma
+
+#   pgadmin:
+#     image: dpage/pgadmin4
+#     container_name: pfa2_pgadmin
+#     restart: "no"
+#     environment:
+#       PGADMIN_DEFAULT_EMAIL: adil@example.com
+#       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
+#     ports:
+#       - "5050:80"
+#     depends_on:
+#       - postgres
+
+# volumes:
+#   postgres_data:
+#   chroma_data:
